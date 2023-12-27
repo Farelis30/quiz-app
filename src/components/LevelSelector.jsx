@@ -88,6 +88,16 @@ const LevelSelector = ({
 
   return (
     <div className="w-full h-screen relative flex items-center justify-center">
+      <motion.div
+        className="bg-white w-full h-screen absolute top-0 z-50"
+        initial={{ opacity: 1, x: 0 }}
+        animate={{
+          opacity: 0.5,
+          x: "-100%",
+          transitionEnd: { display: "none" },
+        }}
+        transition={{ duration: 0.7 }}
+      ></motion.div>
       <div className="w-full h-screen absolute top-0 left-0 bg-black/10 z-10"></div>
       <Link
         href={"/"}
@@ -104,11 +114,11 @@ const LevelSelector = ({
         className="w-full h-screen absolute object-cover object-top"
       />
 
-      <div className="w-1/2 z-40">
+      <div className="w-4/5 md:w-1/2 z-40">
         <h2 className="text-2xl text-white font-bold text-center mb-8">
           Select Level Game
         </h2>
-        <div className="grid grid-cols-2 gap-10 w-full h-72 overflow-y-scroll">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full h-96 md:h-72 overflow-y-scroll">
           {levels.map((level, index) => (
             <motion.button
               whileHover={{ border: 0 }}

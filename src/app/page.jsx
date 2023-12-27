@@ -4,19 +4,43 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { useUser } from "@/utils/UserProvider";
 import { AiOutlineMore } from "react-icons/ai";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const { user, logoutUser } = useUser();
 
   return (
     <div className="w-full relative">
-      <div className="navbar px-10 bg-base-100">
-        <div className="flex-1">
-          <Link href={"/"} className="btn btn-ghost text-xl">
+      <motion.div
+        className="bg-white w-0 h-screen absolute top-0 z-10"
+        initial={{ opacity: 1, x: "40%", width: "100%" }}
+        animate={{
+          opacity: 0,
+          x: "100%",
+          width: 0,
+          transitionEnd: { display: "none" },
+        }}
+        transition={{ duration: 1.2 }}
+      ></motion.div>
+
+      <motion.div
+        className="bg-white w-0 h-screen absolute top-0 z-10"
+        initial={{ opacity: 1, x: "-40%", width: "100%" }}
+        animate={{
+          opacity: 0,
+          x: "100%",
+          width: 0,
+          transitionEnd: { display: "none" },
+        }}
+        transition={{ duration: 1.2 }}
+      ></motion.div>
+      <div className={user ? "navbar px-10 bg-base-100" : "hidden"}>
+        <div className="flex-none md:flex-1">
+          <Link href={"/"} className="btn btn-ghost text-xl hidden md:flex">
             Tebak Gambar
           </Link>
         </div>
-        <div className="flex-none">
+        <div className="flex md:flex-none justify-between w-full md:w-auto">
           {user && (
             <div>
               Selamat Datang <span className="font-bold">{user.username}</span>
@@ -65,11 +89,14 @@ const Home = () => {
         className="w-full min-h-screen absolute -z-10 object-cover object-left-top"
       />
       <div className="w-11/12 mx-auto py-28">
-        <h1 className="text-5xl text-white font-bold">
-          Cerdas dalam Tantangan <br /> Kreatif dalam Tebakan
+        <h1 className="text-4xl md:text-5xl text-white font-bold text-balance">
+          Cerdas dalam Tantangan <br className="hidden md:block" /> Kreatif
+          dalam Tebakan
         </h1>
-        <h2 className="mt-10 mb-16 text-base font-light text-white">
-          Tantang Temanmu Siapa yang Lebih Cepat <br /> Dalam Menebak Gambar !!!
+        <h2 className="mt-10 mb-16 text-xl font-light text-white">
+          Tantang Temanmu Siapa yang Lebih Cepat{" "}
+          <br className="hidden md:block" />
+          Dalam Menebak Gambar !!!
         </h2>
         <Link
           href={user ? "/guess" : "/login"}

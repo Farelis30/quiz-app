@@ -75,7 +75,11 @@ const Login = () => {
             disabled={isLoading}
             className="bg-slate-800 w-full my-3 p-3 text-white font-bold"
           >
-            {isLoading ? "Loading..." : "Login"}
+            {isLoading ? (
+              <span className="loading loading-bars loading-md"></span>
+            ) : (
+              "Login"
+            )}
           </button>
           <p className="my-12">
             Belum punya akun?

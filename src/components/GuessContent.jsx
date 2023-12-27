@@ -325,7 +325,7 @@ const GuessContent = () => {
           >
             <IoIosArrowBack size={30} />
           </motion.button>
-          <div className="bg-[#20324E] w-1/3 text-white h-full p-6 rounded">
+          <div className="bg-[#20324E] w-11/12 md:w-1/3 text-white h-full p-6 rounded">
             <div className="flex justify-between">
               <p className="font-semibold">Soal ke - {indexSoal + 1}</p>
               <Nyawa
@@ -335,10 +335,10 @@ const GuessContent = () => {
                 setCooldown={setCooldown}
               />
             </div>
-            <h1 className="text-2xl font-bold mb-8 mt-2">
+            <h1 className="text-xl md:text-2xl font-bold mb-4 md:mb-8 mt-2">
               Tebak Gambar Berikut Ini
             </h1>
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center mb-4 md:mb-8">
               <Image
                 src={dataSoal[indexSoal].gambar}
                 alt={`Tebak Gambar Soal Ke ${indexSoal}`}
@@ -363,7 +363,7 @@ const GuessContent = () => {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.9 }}
-                className="w-full p-4 bg-blue-700 rounded font-bold duration-700 hover:bg-blue-600 relative z-10"
+                className="w-full p-4 bg-blue-700 text-xl md:text-base rounded font-bold duration-700 hover:bg-blue-600 relative z-10"
                 onClick={handleCorrectAnswer}
               >
                 Cek Jawaban
