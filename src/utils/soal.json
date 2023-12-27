@@ -1,0 +1,63 @@
+{
+  "1": [
+    { "gambar": "/SoalTebakGambar/Soal 1.png", "jawaban": "Apel Merah" },
+    { "gambar": "/SoalTebakGambar/Soal 2.png", "jawaban": "Bunga Matahari" },
+    { "gambar": "/SoalTebakGambar/Soal 3.png", "jawaban": "Papeda" },
+    { "gambar": "/SoalTebakGambar/Soal 4.png", "jawaban": "Bola Kaki" },
+    { "gambar": "/SoalTebakGambar/Soal 5.png", "jawaban": "Sepatu Kaca" }
+  ],
+  "2": [
+    { "gambar": "/SoalTebakGambar/Soal 6.png", "jawaban": "Bantal Guling" },
+    { "gambar": "/SoalTebakGambar/Soal 7.png", "jawaban": "Rumah Tangga" },
+    { "gambar": "/SoalTebakGambar/Soal 8.png", "jawaban": "Senam Otak" },
+    { "gambar": "/SoalTebakGambar/Soal 9.png", "jawaban": "Komputer Lelet" },
+    { "gambar": "/SoalTebakGambar/Soal 10.png", "jawaban": "Buah Hati" }
+  ],
+  "3": [
+    { "gambar": "/SoalTebakGambar/Soal 11.png", "jawaban": "Imajinasi" },
+    { "gambar": "/SoalTebakGambar/Soal 12.png", "jawaban": "Jebakan Batman" },
+    { "gambar": "/SoalTebakGambar/Soal 13.png", "jawaban": "Kunci Inggris" },
+    { "gambar": "/SoalTebakGambar/Soal 14.png", "jawaban": "Kaca Mata" },
+    { "gambar": "/SoalTebakGambar/Soal 15.png", "jawaban": "Angin Duduk" }
+  ],
+  "4": [
+    { "gambar": "/SoalTebakGambar/Soal 16.png", "jawaban": "Surabaya" },
+    { "gambar": "/SoalTebakGambar/Soal 17.png", "jawaban": "Jatuh Cinta" },
+    {
+      "gambar": "/SoalTebakGambar/Soal 18.png",
+      "jawaban": "Perintah Komandan"
+    },
+    { "gambar": "/SoalTebakGambar/Soal 19.png", "jawaban": "Uang Panas" },
+    { "gambar": "/SoalTebakGambar/Soal 20.png", "jawaban": "Telur Asin" }
+  ],
+  "5": [
+    { "gambar": "/SoalTebakGambar/Soal 21.png", "jawaban": "Boneka Salju" },
+    { "gambar": "/SoalTebakGambar/Soal 22.png", "jawaban": "Kue Jahe" },
+    {
+      "gambar": "/SoalTebakGambar/Soal 23.png",
+      "jawaban": "Buah Tangan"
+    },
+    { "gambar": "/SoalTebakGambar/Soal 24.png", "jawaban": "Bintang Kelas" },
+    { "gambar": "/SoalTebakGambar/Soal 25.png", "jawaban": "Jantung Kota" }
+  ],
+  "6": [
+    { "gambar": "/SoalTebakGambar/Soal 26.png", "jawaban": "Kumis Kucing" },
+    { "gambar": "/SoalTebakGambar/Soal 27.png", "jawaban": "Lapang Dada" },
+    {
+      "gambar": "/SoalTebakGambar/Soal 28.png",
+      "jawaban": "Tulang Ikan"
+    },
+    { "gambar": "/SoalTebakGambar/Soal 29.png", "jawaban": "Bunga Desa" },
+    { "gambar": "/SoalTebakGambar/Soal 30.png", "jawaban": "Cuci Otak" }
+  ],
+  "7": [
+    { "gambar": "/SoalTebakGambar/Soal 31.png", "jawaban": "Kutu Buku" },
+    { "gambar": "/SoalTebakGambar/Soal 32.png", "jawaban": "Tangan Kanan" },
+    {
+      "gambar": "/SoalTebakGambar/Soal 33.png",
+      "jawaban": "Tikus Berdasi"
+    },
+    { "gambar": "/SoalTebakGambar/Soal 34.png", "jawaban": "Cari Muka" },
+    { "gambar": "/SoalTebakGambar/Soal 35.png", "jawaban": "Otak Udang" }
+  ]
+}
