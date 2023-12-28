@@ -24,16 +24,7 @@ const Leaderboard = () => {
     };
 
     fetchData();
-
-    const intervalId = setInterval(() => {
-      const updatedData = [...leaderboardData];
-      const randomIndex = Math.floor(Math.random() * leaderboardData.length);
-      updatedData[randomIndex].score += Math.floor(Math.random() * 50) + 1;
-      setLeaderboardData(updatedData);
-    }, 3000);
-
-    return () => clearInterval(intervalId);
-  }, [leaderboardData]);
+  }, []);
 
   const linearGradientStyle = {
     background: "linear-gradient(to right top, #7844C7, #B787FF)",
@@ -45,6 +36,7 @@ const Leaderboard = () => {
       (value) => user.username === value.username
     );
   }
+
   return (
     <div style={linearGradientStyle} className="min-h-screen relative">
       <div className="w-11/12 h-screen md:max-w-md mx-auto py-8 flex flex-col justify-center">
