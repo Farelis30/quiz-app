@@ -1,16 +1,20 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+    } else {
+      router.push("/");
     }
   }, []);
 
@@ -28,6 +32,7 @@ export const UserProvider = ({ children }) => {
       title: "Logout Berhasil",
       icon: "success",
     });
+    router.push("/");
   };
 
   return (

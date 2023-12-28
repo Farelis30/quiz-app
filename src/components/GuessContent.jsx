@@ -9,8 +9,10 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useUser } from "@/utils/UserProvider";
 import { BsQuestionLg } from "react-icons/bs";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const GuessContent = () => {
+  const router = useRouter();
   const { user, setUser } = useUser();
   const [dataSoal, setDataSoal] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
@@ -18,6 +20,7 @@ const GuessContent = () => {
   const [jawaban, setJawaban] = useState("");
   const [nyawa, setNyawa] = useState(user?.lives || 0);
   const [hint, setHint] = useState(user?.hint || 0);
+  const [score, setScore] = useState(user?.score || 0);
   const [completedLevels, setCompletedLevels] = useState(
     user?.completedLevel || []
   );
@@ -108,7 +111,7 @@ const GuessContent = () => {
     }
   };
 
-  const handleCorrectAnswer = () => {
+  const handleCorrectAnswer = async () => {
     const isLastQuestion = indexSoal === dataSoal.length - 1;
     if (
       jawaban.toLocaleLowerCase() ===
@@ -118,28 +121,60 @@ const GuessContent = () => {
         isLastQuestion ? "/sound/win.mp3" : "/sound/right.mp3"
       );
       audio.play();
-      Swal.fire({
-        title: isLastQuestion ? "Selamat Anda Menang!" : "Benar!",
-        imageUrl: isLastQuestion ? "/confetti.gif" : "/good.gif",
-        imageHeight: "200",
-        confirmButtonText: "Lanjut",
-      }).then(() => {
-        setJawaban("");
-        setSelectedLevel(isLastQuestion ? null : selectedLevel);
-        setIndexSoal((prevIndex) =>
-          isLastQuestion ? prevIndex : prevIndex + 1
+      setScore((currentSkor) => currentSkor + 500);
+      try {
+        Swal.fire({
+          title: isLastQuestion ? "Selamat Anda Menang!" : "Benar!",
+          imageUrl: isLastQuestion ? "/confetti.gif" : "/good.gif",
+          imageHeight: "200",
+          confirmButtonText: "Lanjut",
+        }).then(() => {
+          setJawaban("");
+          setSelectedLevel(isLastQuestion ? null : selectedLevel);
+          setIndexSoal((prevIndex) =>
+            isLastQuestion ? prevIndex : prevIndex + 1
+          );
+          if (isLastQuestion) router.push("/leaderboard");
+
+          if (isLastQuestion && !completedLevels.includes(selectedLevel)) {
+            const updatedLevels = [...completedLevels, selectedLevel];
+            updateCompletedLevel(updatedLevels);
+            setCompletedLevels(updatedLevels);
+            localStorage.setItem(
+              "completedLevels",
+              JSON.stringify(updatedLevels)
+            );
+          }
+        });
+        const response = await axios.put(
+          "/api/v1/users",
+          {
+            newScore: user.score + 500,
+            newLives: user.lives,
+            newHint: user.hint,
+            newCompletedLevel: user.completedLevel,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+          }
         );
 
-        if (isLastQuestion && !completedLevels.includes(selectedLevel)) {
-          const updatedLevels = [...completedLevels, selectedLevel];
-          updateCompletedLevel(updatedLevels);
-          setCompletedLevels(updatedLevels);
-          localStorage.setItem(
-            "completedLevels",
-            JSON.stringify(updatedLevels)
-          );
-        }
-      });
+        // Update user data after successful API call
+        setUser(response.data.response);
+
+        // Update local storage
+        localStorage.setItem("user", JSON.stringify(response.data.response));
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          title: "Error",
+          text: "Terjadi kesalahan saat mengupdate nyawa.",
+          icon: "error",
+        });
+      }
     } else {
       handleIncorrectAnswer();
     }
@@ -177,51 +212,64 @@ const GuessContent = () => {
   };
 
   const handleIncorrectAnswer = async () => {
-    const audio = new Audio("/sound/wrong.mp3");
-    audio.play();
-    setNyawa((currentNyawa) => currentNyawa - 1);
+    if (user.lives > 0) {
+      const audio = new Audio("/sound/wrong.mp3");
+      audio.play();
+      setNyawa((currentNyawa) => currentNyawa - 1);
+      if (user.score > 0) {
+        setScore((currentSkor) => currentSkor - 200);
+      }
 
-    try {
-      // Fix the API endpoint URL and payload
-      const response = await axios.put(
-        "/api/v1/users",
-        {
-          newScore: user.score, // Adjust field names based on your server's requirements
-          newLives: user.lives - 1,
-          newHint: user.hint,
-          newCompletedLevel: user.completedLevel,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token"),
+      try {
+        // Fix the API endpoint URL and payload
+        const response = await axios.put(
+          "/api/v1/users",
+          {
+            newScore: user.score > 0 ? user.score - 200 : 0, // Adjust field names based on your server's requirements
+            newLives: user.lives - 1,
+            newHint: user.hint,
+            newCompletedLevel: user.completedLevel,
           },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+          }
+        );
+
+        // Update user data after successful API call
+        setUser(response.data.response);
+
+        // Update local storage
+        localStorage.setItem("user", JSON.stringify(response.data.response));
+
+        if (nyawa === 1) {
+          Swal.fire({
+            title: "Game Over!",
+            imageUrl: "/GameOver.gif",
+            imageHeight: "200",
+            confirmButtonText: "Kembali",
+          }).then(() => {
+            setJawaban("");
+            setSelectedLevel(null);
+          });
         }
-      );
-
-      // Update user data after successful API call
-      setUser(response.data.response);
-
-      // Update local storage
-      localStorage.setItem("user", JSON.stringify(response.data.response));
-
-      if (nyawa === 1) {
+      } catch (error) {
+        console.error(error);
         Swal.fire({
-          title: "Game Over!",
-          imageUrl: "/GameOver.gif",
-          imageHeight: "200",
-          confirmButtonText: "Kembali",
-        }).then(() => {
-          setJawaban("");
-          setSelectedLevel(null);
+          title: "Error",
+          text: "Terjadi kesalahan saat mengupdate nyawa.",
+          icon: "error",
         });
       }
-    } catch (error) {
-      console.error(error);
+    } else {
       Swal.fire({
-        title: "Error",
-        text: "Terjadi kesalahan saat mengupdate nyawa.",
+        title: "Nyawa Anda Habis",
+        text: "Isi nyawa anda agar bisa bermain",
         icon: "error",
+      }).then(() => {
+        router.push("/guess");
       });
     }
   };
@@ -376,7 +424,7 @@ const GuessContent = () => {
               >
                 <BsQuestionLg size={35} />
                 <div className="absolute -bottom-4 -right-4 bg-white text-orange-500 rounded-full w-10 h-10 flex items-center justify-center">
-                  {user.hint}
+                  {hint}
                 </div>
               </motion.button>
             </div>

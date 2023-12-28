@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Nyawa from "./GuessNyawa";
 import { IoIosArrowBack } from "react-icons/io";
+import { MdLeaderboard } from "react-icons/md";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useUser } from "@/utils/UserProvider";
@@ -114,10 +115,25 @@ const LevelSelector = ({
         className="w-full h-screen absolute object-cover object-top"
       />
 
-      <div className="w-4/5 md:w-1/2 z-40">
-        <h2 className="text-2xl text-white font-bold text-center mb-8">
-          Select Level Game
-        </h2>
+      <div className="w-4/5 md:w-1/2 z-40 pt-12">
+        <div className="my-4 md:my-8 flex justify-between items-center text-white">
+          <h2 className="text-2xl text-white font-bold text-center">
+            Select Level Game
+          </h2>
+          <div className="flex items-center gap-3">
+            <h2 className="text-base font-bold text-white hidden md:block">
+              Score: {user ? user.score : 0}
+            </h2>
+            <Link href={"/leaderboard"}>
+              <MdLeaderboard size={30} />
+            </Link>
+          </div>
+        </div>
+        <div className="w-full flex justify-end my-4 md:hidden">
+          <h2 className="text-base font-bold text-white">
+            Score: {user ? user.score : 0}
+          </h2>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full h-96 md:h-72 overflow-y-scroll">
           {levels.map((level, index) => (
             <motion.button
@@ -136,17 +152,17 @@ const LevelSelector = ({
         </div>
         {user && (
           <div className="mt-4 flex justify-between  py-4 rounded">
-            <div className="text-white text-xl font-bold bg-orange-500 p-3 rounded flex items-center">
+            <div className="text-white text-xl font-bold bg-orange-600 p-3 rounded flex items-center">
               Hint : {user.hint}
             </div>
             <div className="text-white p-3 text-xl font-bold flex items-center gap-2 bg-slate-100 rounded relative">
               <Nyawa
-                jumlahNyawa={jumlahNyawa}
+                jumlahNyawa={user.lives}
                 onNyawaRecovered={handleNyawaRecovered}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
               />
-              {jumlahNyawa < 3 && (
+              {user.lives < 3 && (
                 <>
                   {isCooldownActive ? (
                     <motion.button
