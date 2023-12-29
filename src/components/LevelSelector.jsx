@@ -78,7 +78,6 @@ const LevelSelector = ({
         });
       }
     } catch (error) {
-      console.error(error);
       Swal.fire({
         title: "Error",
         text: "Terjadi kesalahan saat mengupdate nyawa.",
@@ -102,6 +101,7 @@ const LevelSelector = ({
       <div className="w-full h-screen absolute top-0 left-0 bg-black/10 z-10"></div>
       <Link
         href={"/"}
+        aria-label="Back to homepage"
         className="w-14 h-14 absolute top-4 left-4 bg-[#20324E] text-white rounded-full flex place-items-center justify-center border-4 border-white z-20 hover:scale-110"
       >
         <IoIosArrowBack size={30} />
@@ -122,16 +122,23 @@ const LevelSelector = ({
           </h2>
           <div className="flex items-center gap-3">
             <h2 className="text-base font-bold text-white hidden md:block">
-              Score: {user ? user.score : 0}
+              Score: {user && user.score}
             </h2>
-            <Link href={"/leaderboard"}>
+            <Link
+              href={"/leaderboard"}
+              onClick={() => {
+                const audio = new Audio("/sound/leaderboard.mp3");
+                audio.play();
+              }}
+              aria-label="go to leaderboard"
+            >
               <MdLeaderboard size={30} />
             </Link>
           </div>
         </div>
         <div className="w-full flex justify-end my-4 md:hidden">
           <h2 className="text-base font-bold text-white">
-            Score: {user ? user.score : 0}
+            Score: {user && user.score}
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full h-96 md:h-72 overflow-y-scroll">

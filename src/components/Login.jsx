@@ -14,7 +14,8 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
     try {
       const response = await axios.post("/api/v1/users/login", {
@@ -42,58 +43,59 @@ const Login = () => {
       <div className="w-full flex h-3/4 bg-white p-4 gap-6">
         <Image
           src={"/BgImage.png"}
-          width={200}
+          width={500}
           height={400}
           alt="Login form"
           className="w-1/2 h-full object-cover hidden md:block"
         />
 
-        <div className="p-2">
-          <h1 className="text-3xl font-bold text-center p-5">Login Forms</h1>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full p-3 outline-none border-2 my-3"
-            placeholder="Username"
-            name="username"
-            autoComplete="true"
-          />
+        <form onSubmit={handleLogin}>
+          <div className="p-2">
+            <h1 className="text-3xl font-bold text-center p-5">Login Forms</h1>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full p-3 outline-none border-2 my-3"
+              placeholder="Username"
+              name="username"
+              autoComplete="true"
+            />
 
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 outline-none border-2 my-3"
-            placeholder="Password"
-            name="password"
-            autoComplete="true"
-          />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 outline-none border-2 my-3"
+              placeholder="Password"
+              name="password"
+              autoComplete="true"
+            />
 
-          <button
-            onClick={handleLogin}
-            disabled={isLoading}
-            className="bg-slate-800 w-full my-3 p-3 text-white font-bold"
-          >
-            {isLoading ? (
-              <span className="loading loading-bars loading-md"></span>
-            ) : (
-              "Login"
-            )}
-          </button>
-          <p className="my-12">
-            Belum punya akun?
-            <span>
-              <Link
-                href={"/register"}
-                className="text-blue-700 hover:text-blue-800"
-              >
-                {" "}
-                Buat disini
-              </Link>
-            </span>{" "}
-          </p>
-        </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="bg-slate-800 w-full my-3 p-3 text-white font-bold"
+            >
+              {isLoading ? (
+                <span className="loading loading-bars loading-md"></span>
+              ) : (
+                "Login"
+              )}
+            </button>
+            <p className="my-12">
+              Belum punya akun?
+              <span>
+                <Link
+                  href={"/register"}
+                  className="text-blue-700 hover:text-blue-800"
+                >
+                  Buat disini
+                </Link>
+              </span>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   );

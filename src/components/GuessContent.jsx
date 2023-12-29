@@ -111,7 +111,8 @@ const GuessContent = () => {
     }
   };
 
-  const handleCorrectAnswer = async () => {
+  const handleCorrectAnswer = async (e) => {
+    e.preventDefault();
     const isLastQuestion = indexSoal === dataSoal.length - 1;
     if (
       jawaban.toLocaleLowerCase() ===
@@ -134,7 +135,11 @@ const GuessContent = () => {
           setIndexSoal((prevIndex) =>
             isLastQuestion ? prevIndex : prevIndex + 1
           );
-          if (isLastQuestion) router.push("/leaderboard");
+          if (isLastQuestion) {
+            router.push("/leaderboard");
+            const audio = new Audio("/sound/leaderboard.mp3");
+            audio.play();
+          }
 
           if (isLastQuestion && !completedLevels.includes(selectedLevel)) {
             const updatedLevels = [...completedLevels, selectedLevel];
@@ -277,6 +282,8 @@ const GuessContent = () => {
   // handle hint
   const handleHint = async () => {
     if (user.hint > 0) {
+      const audio = new Audio("/sound/hint.mp3");
+      audio.play();
       setHint((currentHint) => currentHint - 1);
       const correctAnswer = dataSoal[indexSoal].jawaban.toLowerCase();
 
@@ -397,37 +404,40 @@ const GuessContent = () => {
                 className="w-full h-auto rounded-md"
               />
             </div>
-            <input
-              type="text"
-              name=""
-              id=""
-              value={jawaban}
-              onChange={handleJawabanChange}
-              placeholder="Ketik Jawaban Anda Disini..."
-              className="w-full px-5 py-3 outline-none rounded-md text-black font-bold mb-4"
-            />
-
-            <div className="flex gap-2">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-full p-4 bg-blue-700 text-xl md:text-base rounded font-bold duration-700 hover:bg-blue-600 relative z-10"
-                onClick={handleCorrectAnswer}
-              >
-                Cek Jawaban
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-16 p-4 bg-orange-500 text-white rounded-full font-bold duration-700 hover:bg-orange-600 relative z-10"
-                onClick={handleHint}
-              >
-                <BsQuestionLg size={35} />
-                <div className="absolute -bottom-4 -right-4 bg-white text-orange-500 rounded-full w-10 h-10 flex items-center justify-center">
-                  {hint}
-                </div>
-              </motion.button>
-            </div>
+            <form action="" onSubmit={handleCorrectAnswer}>
+              <input
+                type="text"
+                name=""
+                id=""
+                value={jawaban}
+                onChange={handleJawabanChange}
+                placeholder="Ketik Jawaban Anda Disini..."
+                className="w-full px-5 py-3 outline-none rounded-md text-black font-bold mb-4"
+              />
+              <div className="flex gap-2">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="w-full p-4 bg-blue-700 text-xl md:text-base rounded font-bold duration-700 hover:bg-blue-600 relative z-10"
+                  onClick={handleCorrectAnswer}
+                  type="submit"
+                >
+                  Cek Jawaban
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="w-16 p-4 bg-orange-500 text-white rounded-full font-bold duration-700 hover:bg-orange-600 relative z-10"
+                  onClick={handleHint}
+                  type="button"
+                >
+                  <BsQuestionLg size={35} />
+                  <div className="absolute -bottom-4 -right-4 bg-white text-orange-500 rounded-full w-10 h-10 flex items-center justify-center">
+                    {hint}
+                  </div>
+                </motion.button>
+              </div>
+            </form>
           </div>
         </motion.div>
       ) : (

@@ -44,7 +44,6 @@ const Leaderboard = () => {
         <div className="h-96 overflow-y-auto">
           <AnimatePresence>
             {isLoading ? (
-              // Show skeleton loading while data is being fetched
               <>
                 {[1, 2, 3, 4, 5].map((index) => (
                   <div
@@ -106,6 +105,10 @@ const Leaderboard = () => {
             </motion.div>
             <Link
               href={"/guess"}
+              onClick={() => {
+                const audio = new Audio("/sound/transition.mp3");
+                audio.play();
+              }}
               className="w-full h-14 bg-[#20324E] text-white font-bold text-2xl rounded flex place-items-center border-4 border-white hover:scale-105 px-4"
             >
               <IoIosArrowBack size={30} className="block md:hidden" />

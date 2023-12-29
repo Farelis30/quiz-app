@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { useUser } from "@/utils/UserProvider";
 import { AiOutlineMore } from "react-icons/ai";
@@ -49,6 +49,7 @@ const Home = () => {
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
+              aria-label="menu"
               role="button"
               className="btn btn-ghost btn-circle avatar grid place-items-center"
             >
@@ -70,7 +71,9 @@ const Home = () => {
               )}
               <li>
                 {user ? (
-                  <a onClick={logoutUser}>Logout</a>
+                  <button aria-label="logout" onClick={logoutUser}>
+                    Logout
+                  </button>
                 ) : (
                   <Link href="/login">Login</Link>
                 )}
@@ -100,6 +103,14 @@ const Home = () => {
         </h2>
         <Link
           href={user ? "/guess" : "/login"}
+          onClick={
+            user
+              ? () => {
+                  const audio = new Audio("/sound/transition.mp3");
+                  audio.play();
+                }
+              : ""
+          }
           className="text-xl bg-[#FFBC42] px-8 py-2 font-bold cursor-pointer hover:bg-[#ffcb69] duration-300"
         >
           Let's Play
