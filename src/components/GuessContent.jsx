@@ -122,35 +122,9 @@ const GuessContent = () => {
         isLastQuestion ? "/sound/win.mp3" : "/sound/right.mp3"
       );
       audio.play();
-      setScore((currentSkor) => currentSkor + 500);
-      try {
-        Swal.fire({
-          title: isLastQuestion ? "Selamat Anda Menang!" : "Benar!",
-          imageUrl: isLastQuestion ? "/confetti.gif" : "/good.gif",
-          imageHeight: "200",
-          confirmButtonText: "Lanjut",
-        }).then(() => {
-          setJawaban("");
-          setSelectedLevel(isLastQuestion ? null : selectedLevel);
-          setIndexSoal((prevIndex) =>
-            isLastQuestion ? prevIndex : prevIndex + 1
-          );
-          if (isLastQuestion) {
-            router.push("/leaderboard");
-            const audio = new Audio("/sound/leaderboard.mp3");
-            audio.play();
-          }
 
-          if (isLastQuestion && !completedLevels.includes(selectedLevel)) {
-            const updatedLevels = [...completedLevels, selectedLevel];
-            updateCompletedLevel(updatedLevels);
-            setCompletedLevels(updatedLevels);
-            localStorage.setItem(
-              "completedLevels",
-              JSON.stringify(updatedLevels)
-            );
-          }
-        });
+      try {
+        // Make the API call to update user data
         const response = await axios.put(
           "/api/v1/users",
           {
@@ -167,16 +141,49 @@ const GuessContent = () => {
           }
         );
 
+        // Update the score state with the API response value
+        setScore(response.data.response.score);
+
         // Update user data after successful API call
         setUser(response.data.response);
 
         // Update local storage
         localStorage.setItem("user", JSON.stringify(response.data.response));
+
+        // Display success message using Swal
+        Swal.fire({
+          title: isLastQuestion ? "Selamat Anda Menang!" : "Benar!",
+          imageUrl: isLastQuestion ? "/confetti.gif" : "/good.gif",
+          imageHeight: "200",
+          confirmButtonText: "Lanjut",
+        }).then(() => {
+          setJawaban("");
+          setSelectedLevel(isLastQuestion ? null : selectedLevel);
+          setIndexSoal((prevIndex) =>
+            isLastQuestion ? prevIndex : prevIndex + 1
+          );
+
+          if (isLastQuestion) {
+            router.push("/leaderboard");
+            const audio = new Audio("/sound/leaderboard.mp3");
+            audio.play();
+          }
+
+          if (isLastQuestion && !completedLevels.includes(selectedLevel)) {
+            const updatedLevels = [...completedLevels, selectedLevel];
+            updateCompletedLevel(updatedLevels);
+            setCompletedLevels(updatedLevels);
+            localStorage.setItem(
+              "completedLevels",
+              JSON.stringify(updatedLevels)
+            );
+          }
+        });
       } catch (error) {
         console.error(error);
         Swal.fire({
           title: "Error",
-          text: "Terjadi kesalahan saat mengupdate nyawa.",
+          text: "Terjadi kesalahan saat mengupdate skor.",
           icon: "error",
         });
       }
@@ -184,6 +191,7 @@ const GuessContent = () => {
       handleIncorrectAnswer();
     }
   };
+
   const updateCompletedLevel = async (updatedLevels) => {
     try {
       const response = await axios.put(
