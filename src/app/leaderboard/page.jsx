@@ -32,9 +32,8 @@ const Leaderboard = () => {
 
   let updatedUser;
   if (!isLoading) {
-    updatedUser = leaderboardData.find(
-      (value) => user.username === value.username
-    );
+    updatedUser =
+      user && leaderboardData.find((value) => user.username === value.username);
   }
 
   return (
