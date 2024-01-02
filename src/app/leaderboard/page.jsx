@@ -36,6 +36,8 @@ const Leaderboard = () => {
       user && leaderboardData.find((value) => user.username === value.username);
   }
 
+  console.log(updatedUser);
+
   return (
     <div style={linearGradientStyle} className="min-h-screen relative">
       <div className="w-11/12 h-screen md:max-w-md mx-auto py-8 flex flex-col justify-center">
