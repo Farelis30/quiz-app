@@ -88,35 +88,35 @@ const Leaderboard = () => {
             }
           </>
         ) : (
-          <></>
-          // <>
-          //   <motion.div
-          //     initial={{ opacity: 0, y: 20 }}
-          //     animate={{ opacity: 1, y: 0 }}
-          //     exit={{ opacity: 0, y: -20 }}
-          //     transition={{ duration: 0.5 }}
-          //     className="flex items-center justify-between bg-purple-800 text-white p-4 rounded-md shadow-md mb-4"
-          //   >
-          //     <span className="text-xl font-semibold">Your Position</span>
-          //     <span className="text-lg font-bold">
-          //       {user ? updatedUser.username : ""}
-          //     </span>
-          //     <span className="text-lg font-semibold">
-          //       {user ? updatedUser.position : ""}
-          //     </span>
-          //   </motion.div>
-          //   <Link
-          //     href={"/guess"}
-          //     onClick={() => {
-          //       const audio = new Audio("/sound/transition.mp3");
-          //       audio.play();
-          //     }}
-          //     className="w-full h-14 bg-[#20324E] text-white font-bold text-2xl rounded flex place-items-center border-4 border-white hover:scale-105 px-4"
-          //   >
-          //     <IoIosArrowBack size={30} className="block md:hidden" />
-          //     <div className="w-full text-center">Kembali</div>
-          //   </Link>
-          // </>
+          // <></>
+          <>
+            {/* <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center justify-between bg-purple-800 text-white p-4 rounded-md shadow-md mb-4"
+            >
+              <span className="text-xl font-semibold">Your Position</span>
+              <span className="text-lg font-bold">
+                {user ? updatedUser.username : ""}
+              </span>
+              <span className="text-lg font-semibold">
+                {user ? updatedUser.position : ""}
+              </span>
+            </motion.div> */}
+            <Link
+              href={"/guess"}
+              onClick={() => {
+                const audio = new Audio("/sound/transition.mp3");
+                audio.play();
+              }}
+              className="w-full h-14 bg-[#20324E] text-white font-bold text-2xl rounded flex place-items-center border-4 border-white hover:scale-105 px-4"
+            >
+              <IoIosArrowBack size={30} className="block md:hidden" />
+              <div className="w-full text-center">Kembali</div>
+            </Link>
+          </>
         )}
       </div>
     </div>
